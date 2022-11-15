@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>呵呵</h1>
+    <h1>Search</h1>
     <typeNav></typeNav>
   </div>
 </template>

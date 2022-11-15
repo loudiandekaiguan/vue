@@ -4,27 +4,22 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
-            </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
+        <!-- swiper-container是自己加的 -->
+        <div class="swiper-container">
+          <div class="swiper" ref="mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(carousel, index) in bannerList" :key="carousel.id">
+                <img :src="carousel.imgUrl" />
+              </div>
 
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+
+            <!-- 如果需要导航按钮 -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
         </div>
       </div>
       <div class="right">
@@ -111,8 +106,45 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Swiper from 'swiper'
+
 export default {
-  name: ''
+  name: 'ListContainer',
+  mounted() {
+    this.$store.dispatch('getBannerList')
+  },
+  computed: {
+    ...mapState({
+      bannerList: state => state.home.bannerList
+    })
+  },
+  watch: {
+    bannerList: {
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          var mySwiper = new Swiper(this.$refs.mySwiper, {
+            // direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+
+            // 如果需要分页器
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }
+          })
+        })
+
+      }
+
+    }
+  }
 }
 </script>
 
@@ -131,6 +163,10 @@ export default {
       height: 100%;
       padding: 5px;
       float: left;
+
+      .swiper {
+        width: 740px;
+      }
     }
 
     .right {

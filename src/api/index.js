@@ -22,3 +22,9 @@ export const reqFloorList = () => {
     menubar: 'get'
   })
 }
+
+export const reqGetSearchInfo = (params) => requests({
+  url: '/list',
+  method: 'post',
+  data: params
+})

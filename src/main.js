@@ -3,15 +3,19 @@ import App from './App.vue'
 import router from '@/router'
 import TypeNav from '@/components/TypeNav'
 import store from '@/store'
+import Carousel from '@/components/Carousel'
 
-Vue.component('TypeNav', TypeNav)//注册全局组件
+Vue.component('TypeNav', TypeNav)
+Vue.component(Carousel.name, Carousel)
 
 import '@/mock/mockServer'
 import 'swiper/css/swiper.css'
 
 new Vue({
   render: h => h(App),
-  //注册路由
+  beforeCreate() {
+    Vue.prototype.$bus = this
+  },
   router,
   store
 }).$mount('#app')

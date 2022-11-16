@@ -59,6 +59,11 @@ export default {
       const test = this.$router.push({ name: 'search', params: { keyword: this.keyword || undefined } })
       // console.log(test)
     }
+  },
+  mounted(){
+    this.$bus.$on('clear', ()=>{
+      this.keyword=''
+    })
   }
 }
 </script>
